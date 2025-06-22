@@ -6,8 +6,13 @@ export const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
+    path: 'home',
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent),
+  },
+  {
     path: '',
-    redirectTo: '/auth/register',
+    redirectTo: '/home',
     pathMatch: 'full',
   },
 ];
