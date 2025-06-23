@@ -1,0 +1,65 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Add New Task</h2>
+
+  <!-- ✅ Success Message -->
+  <div *ngIf="successMessage" class="message message-success">
+    {{ successMessage }}
+  </div>
+
+  <!-- ❌ Error Message -->
+  <div *ngIf="errorMessage" class="message message-error">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="onAddTask()" #taskForm="ngForm" class="mb-4">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input
+        id="title"
+        type="text"
+        name="title"
+        [(ngModel)]="task.title"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="task.description"
+        rows="3"
+        required
+        class="form-control"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="taskForm.invalid"
+      class="btn btn-primary w-100"
+    >
+      Add Task
+    </button>
+  </form>
+
+  <div *ngIf="tasks$ | async as tasks">
+    <h3 class="mb-3">Task List</h3>
+
+    <ul *ngIf="tasks.length; else noTasks" class="list-unstyled">
+      <li
+        *ngFor="let task of tasks"
+        class="task-item mb-3 p-3 rounded shadow-sm bg-light"
+      >
+        <strong>{{ task.title }}</strong>
+        <p>{{ task.description }}</p>
+      </li>
+    </ul>
+
+    <ng-template #noTasks>
+      <p>No tasks found.</p>
+    </ng-template>
+  </div>
+</div>

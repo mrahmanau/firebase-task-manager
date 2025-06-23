@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FirestoreService } from '../services/firestore.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit {
   task = {
     title: '',
     description: '',
@@ -19,7 +20,13 @@ export class TasksComponent {
   successMessage: string = '';
   errorMessage: string = '';
 
+  tasks$: Observable<any[]> = new Observable();
+
   constructor(private fireStoreService: FirestoreService) {}
+
+  ngOnInit(): void {
+    this.tasks$ = this.fireStoreService.getTasks();
+  }
 
   onAddTask() {
     this.successMessage = '';

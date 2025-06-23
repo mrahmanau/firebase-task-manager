@@ -1,0 +1,33 @@
+<nav class="navbar container">
+  <a routerLink="/" class="logo">Task Manager</a>
+
+  <button
+    class="menu-toggle btn btn-primary"
+    (click)="toggleMenu()"
+    aria-label="Toggle navigation"
+    type="button"
+  >
+    &#9776;
+  </button>
+
+  <ul [class.open]="menuOpen">
+    <li><a routerLink="/" (click)="menuOpen = false">Home</a></li>
+    <li><a routerLink="/tasks" (click)="menuOpen = false">Tasks</a></li>
+
+    <ng-container *ngIf="currentUser$ | async as user; else loggedOut">
+      <li class="user-email">{{ user.email }}</li>
+      <li>
+        <button class="btn btn-danger" (click)="logout(); menuOpen = false">
+          Logout
+        </button>
+      </li>
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <li><a routerLink="/auth/login" (click)="menuOpen = false">Login</a></li>
+      <li>
+        <a routerLink="/auth/register" (click)="menuOpen = false">Register</a>
+      </li>
+    </ng-template>
+  </ul>
+</nav>
