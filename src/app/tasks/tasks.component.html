@@ -1,0 +1,32 @@
+<div class="task-form-container">
+  <h2>Add New Task</h2>
+
+  <!-- ✅ Success Message -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <!-- ❌ Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="onAddTask()" #taskForm="ngForm">
+    <div>
+      <label>Title:</label>
+      <input type="text" name="title" [(ngModel)]="task.title" required />
+    </div>
+
+    <div>
+      <label>Description:</label>
+      <textarea
+        name="description"
+        [(ngModel)]="task.description"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+
+    <button type="submit" [disabled]="taskForm.invalid">Add Task</button>
+  </form>
+</div>

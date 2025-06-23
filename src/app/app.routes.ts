@@ -11,6 +11,11 @@ export const routes: Routes = [
       import('./home/home.component').then((m) => m.HomeComponent),
   },
   {
+    path: 'tasks',
+    loadComponent: () =>
+      import('./tasks/tasks.component').then((m) => m.TasksComponent),
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
